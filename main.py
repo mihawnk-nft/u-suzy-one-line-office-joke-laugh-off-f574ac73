@@ -32,10 +32,14 @@ def validate_joke(joke: str) -> None:
     """Check the joke against the competition rules.
 
     Raises AssertionError if the joke is empty, longer than 200
-    characters, or spans more than one line.
+    characters, spans more than one line, or carries leading/trailing
+    whitespace (a trailing newline would make the file look like two
+    lines to a strict reader, so the entry is written with no newline
+    at the end at all).
     """
     assert 1 <= len(joke) <= 200, f"joke must be 1-200 chars, got {len(joke)}"
     assert "\n" not in joke, "joke must be a single line"
+    assert joke == joke.strip(), "joke must not have leading/trailing whitespace"
 
 
 def write_entry(joke: str) -> str:
